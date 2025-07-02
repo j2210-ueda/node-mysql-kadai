@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require("passport");
 
 router.get('/', function (req, res, next) {
   const userId = req.session.userid;
@@ -13,7 +14,7 @@ router.get('/', function (req, res, next) {
 router.post('/', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/signin',
-    failureFlash: false,
+    failureFlash: true,
   }
 ));
 
