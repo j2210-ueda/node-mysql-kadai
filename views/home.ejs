@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+</head>
+<body>
+  <h1>ホーム画面</h1>
+  <% if (isAuth) { %>
+    <p>ログイン中です。</p>
+    <a href="/todo">ToDoリストへ</a>
+    <form action="/logout" method="post" style="display:inline;">
+      <button type="submit">ログアウト</button>
+    </form>
+  <% } else if(isAuth==false){ %>
+    <p>ログインしていません。</p>
+    <a href="/signin">サインイン</a>
+  <% } %>
+</body>
+</html>
