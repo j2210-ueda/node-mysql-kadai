@@ -14,26 +14,15 @@
     <button type="submit">追加</button>
   </form>
 
-<!-- ...existing code... -->
-<ul>
-  <% if (tasks.length === 0) { %>
-    <li>タスクはありません。</li>
-  <% } else { %>
-    <% tasks.forEach(function(task) { %>
-      <li>
-        <%= task.content %>
-        <% if (!task.done) { %>
-          <form action="/todo/done/<%= task.id %>" method="POST" style="display:inline;">
-            <button type="submit">完了</button>
-          </form>
-        <% } else { %>
-          <span style="color:green;">[完了]</span>
-        <% } %>
-      </li>
-    <% }); %>
-  <% } %>
-</ul>
-<!-- ...existing code... -->
+  <ul>
+    <% if (tasks.length === 0) { %>
+      <li>タスクはありません。</li>
+    <% } else { %>
+      <% tasks.forEach(function(task) { %>
+        <li><%= task.content %></li>
+      <% }); %>
+    <% } %>
+  </ul>
 
   <a href="/home">ホームへ戻る</a>
 </body>
