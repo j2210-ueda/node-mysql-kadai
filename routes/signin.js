@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', passport.authenticate('local', {
-    successRedirect: '/',
+    successRedirect: '/todo', // ← ここを変更
     failureRedirect: '/signin',
     failureFlash: true,
   }

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', function (req, res, next) {
-  req.logout();
-  res.redirect("/");
+router.post('/', function (req, res, next) {
+  req.session = null;
+  res.redirect('/'); // Redirect to home after logout
 });
 
 module.exports = router;

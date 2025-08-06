@@ -11,14 +11,14 @@ module.exports = function (app) {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function (id, done) {
-    try {
-      const user = User.findById(id);
-      done(null, user);
-    } catch (error) {
-      done(error, null);
-    }
-  });
+  passport.deserializeUser(async function (id, done) {
+  try {
+    const user = await User.findById(id); // ← awaitを追加
+    done(null, user);
+  } catch (error) {
+    done(error, null);
+  }
+});
 
   passport.use(new LocalStrategy({
       usernameField: "username",
@@ -32,8 +32,10 @@ module.exports = function (app) {
         .then(async function (results) {
           if (results.length === 0) {
             return done(null, false, {message: "Invalid User"});
-          } else if (await bcrypt.compare(password, results[0].password)) {
-            return done(null, results[0]);
+          } 
+          const user = results[0];
+          if (await bcrypt.compare(password, user.password)) {
+            return done(null, user);
           } else {
             return done(null, false, {message: "Invalid User"});
           }
