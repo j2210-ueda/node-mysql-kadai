@@ -41,4 +41,11 @@ router.post('/add', ensureAuthenticated, async (req, res) => {
   }
 });
 
+//タスク削除
+router.post('/done/:id', async (req, res) => {
+    const id = req.params.id;
+    await knex('tasks').where({ id}).update({ done: true });
+    res.redirect('/todo');
+});
+
 module.exports = router;
