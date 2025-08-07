@@ -8,32 +8,58 @@
 <body>
   <h1>TODOリスト</h1>
   <p>ユーザー: <%= user.name %></p>
-
-  <form action="/todo/add" method="POST">
-    <input type="text" name="content" placeholder="新しいタスクを入力" required>
-    <button type="submit">追加</button>
-  </form>
-
-<!-- ...existing code... -->
-<ul>
-  <% if (tasks.length === 0) { %>
-    <li>タスクはありません。</li>
-  <% } else { %>
-    <% tasks.forEach(function(task) { %>
-      <li>
-        <%= task.content %>
-        <% if (!task.done) { %>
-          <form action="/todo/done/<%= task.id %>" method="POST" style="display:inline;">
-            <button type="submit">完了</button>
-          </form>
-        <% } else { %>
-          <span style="color:green;">[完了]</span>
-        <% } %>
-      </li>
-    <% }); %>
-  <% } %>
-</ul>
-<!-- ...existing code... -->
+<form action="/todo/add" method="POST">
+  <input type="text" name="content" placeholder="新しいタスクを入力" required>
+  <input type="date" name="deadline" placeholder="締切日" required>
+  <button type="submit">追加</button>
+</form>
+  <ul>
+    <% if (tasks.length === 0) { %>
+      <li>タスクはありません。</li>
+    <% } else { %>
+      <% tasks.forEach(function(task) { %>
+        <li>
+          <%= task.content %>
+          （締切日:
+            <% if (task.deadline) { %>
+              <%= new Date(task.deadline).toLocaleDateString('ja-JP') %>
+            <% } else { %>
+              未設定
+            <% } %>
+          ）
+          <% if (!task.done) { %>
+            <form action="/todo/done/<%= task.id %>" method="POST" style="display:inline;">
+              <button type="submit">完了</button>
+            </form>
+          <% } else { %>
+            <span style="color:green;">[完了]</span>
+            <form action="/todo/delete/<%= task.id %>" method="POST" style="display:inline;">
+              <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+            </form>
+          <% } %>
+        </li>
+      <% }); %>
+      <!-- <% tasks.forEach(function(task) { %>
+        <li>
+          <%= task.content %>
+          （締切日: 
+            <% if (task.deadline) { %>
+              <%= new Date(task.deadline).toLocaleDateString('ja-JP') %>
+            <% } else { %>
+              未設定
+            <% } %>
+          ）
+          <% if (!task.done) { %>
+            <form action="/todo/done/<%= task.id %>" method="POST" style="display:inline;">
+              <button type="submit">完了</button>
+            </form>
+          <% } else { %>
+            <span style="color:green;">[完了]</span>
+          <% } %>
+        </li>
+      <% }); %> -->
+    <% } %>
+  </ul>
 
   <a href="/home">ホームへ戻る</a>
 </body>

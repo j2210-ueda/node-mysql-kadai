@@ -5,6 +5,7 @@ module.exports = {
   development: {
     client: "mysql",
     connection: {
+      host: 'localhost',
       database: "todo_app",
       user: "root",
       password: "password",

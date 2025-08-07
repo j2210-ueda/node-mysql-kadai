@@ -4,7 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const homeRouter = require('./routes/home');
-const calendarRouter = require('./routes/calendar');
+
 const app = express();
 
 
@@ -25,11 +25,10 @@ require("./config/passport")(app);
 // router
 app.use('/', require('./routes'));
 app.use('/todo', require('./routes/todo'));
-app.use('/logout', require('./routes/logout'));
 app.use('/home', homeRouter);
-app.use('/calendar', calendarRouter);
 
-//error handler
+
+// error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -41,6 +40,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});//comented out to avoid errors during development
+});
 
 module.exports = app;
