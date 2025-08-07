@@ -28,18 +28,32 @@ router.get('/', ensureAuthenticated, async (req, res) => {
 });
 
 // TODO追加（例）
+// router.post('/add', ensureAuthenticated, async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const { content } = req.body;
+//     if (content && content.trim()) {
+//       await knex('tasks').insert({ user_id: userId, content });
+//     }
+//     res.redirect('/todo');
+//   } catch (err) {
+//     res.status(500).send('Error adding task');
+//   }
+// });
+// ...existing code...
 router.post('/add', ensureAuthenticated, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { content } = req.body;
-    if (content && content.trim()) {
-      await knex('tasks').insert({ user_id: userId, content });
+    const { content, deadline } = req.body;
+    if (content && content.trim() && deadline) {
+      await knex('tasks').insert({ user_id: userId, content, deadline });
     }
     res.redirect('/todo');
   } catch (err) {
     res.status(500).send('Error adding task');
   }
 });
+// ...existing code...
 
 //タスク削除
 router.post('/done/:id', async (req, res) => {
